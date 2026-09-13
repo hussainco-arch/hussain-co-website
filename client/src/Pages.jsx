@@ -60,6 +60,13 @@ export function Products() {
     q,
     category
   })}`);
+  const fallbackProducts = catalogProducts.filter(product => {
+    const matchesCategory = !category || (category === 'industrial'
+      ? ['industrial', 'glycols', 'solvents', 'carbon'].includes(product.category)
+      : product.category === category);
+    const searchText = `${product.name} ${product.cas || ''} ${product.grade || ''}`.toLowerCase();
+    return matchesCategory && (!q || searchText.includes(q.toLowerCase()));
+  });
   function update(values) {
     const next = new URLSearchParams(params);
     for (const [k, v] of Object.entries(values)) v ? next.set(k, v) : next.delete(k);
@@ -116,7 +123,7 @@ export function Products() {
     } catch {/* Optional API: normal website remains fully usable. */}
     return () => lifecycle.abort();
   }, [setParams]);
-  const list = [...(data?.products || [])];
+  const list = [...(data?.products || (error ? fallbackProducts : []))];
   if (sort === 'name') list.sort((a, b) => a.name.localeCompare(b.name));
   return <><PageIntro label="OUR CHEMICAL PORTFOLIO" title={<>Materials for<br /><em>what comes next.</em></>}>Explore our product list. Find a material, review the available details, and send your requirements to our team.</PageIntro><section className="catalog-section section"><div className="catalog-layout"><aside className="filters"><span className="eyebrow">CATEGORIES</span><button className={!category ? 'selected' : ''} onClick={() => update({
             category: ''
@@ -131,9 +138,9 @@ export function Products() {
           <button className={category === 'technical' ? 'selected' : ''} onClick={() => update({category: 'technical'})}><CategoryIcon slug="technical" size={17} />Technical Products</button>
           <button className={category === 'other' ? 'selected' : ''} onClick={() => update({category: 'other'})}><CategoryIcon slug="other" size={17} />Other Chemicals</button>
           <button className={category === 'carbon' ? 'selected' : ''} onClick={() => update({category: 'carbon'})}><CategoryIcon slug="carbon" size={17} />Carbon</button>
-          <div className="help-box"><Package size={25} strokeWidth={1.2} /><h3>Can’t find your material?</h3><p>Send us your specification. Let’s discuss your requirement.</p><a href={`https://wa.me/${company.whatsapp}`} target="_blank" rel="noreferrer">Ask our team <Arrow size={15} /></a></div></aside><div><div className="catalog-top"><span aria-live="polite">{loading ? 'Loading…' : `${data?.total || 0} products${q ? ` for “${q}”` : ''}`}</span><label>Sort by <select value={sort} onChange={e => update({
+          <div className="help-box"><Package size={25} strokeWidth={1.2} /><h3>Can’t find your material?</h3><p>Send us your specification. Let’s discuss your requirement.</p><a href={`https://wa.me/${company.whatsapp}`} target="_blank" rel="noreferrer">Ask our team <Arrow size={15} /></a></div></aside><div><div className="catalog-top"><span aria-live="polite">{loading ? 'Loading…' : `${data?.total ?? fallbackProducts.length} products${q ? ` for “${q}”` : ''}`}</span><label>Sort by <select value={sort} onChange={e => update({
                 sort: e.target.value
-              })}><option value="catalog">Catalog order</option><option value="name">Name A–Z</option></select></label></div>{loading ? <Loading /> : error ? <ErrorPanel message={error} retry={retry} /> : list.length ? <div className="product-grid">{list.map(p => <ProductCard key={p.slug} product={p} />)}</div> : <div className="state-panel"><Search size={32} /><h3>No products found</h3><p>Try another name or clear your filters.</p><button className="button" onClick={() => setParams({})}>Show all products <Arrow /></button></div>}</div></div></section><Callout /></>;
+              })}><option value="catalog">Catalog order</option><option value="name">Name A–Z</option></select></label></div>{loading ? <Loading /> : list.length ? <div className="product-grid">{list.map(p => <ProductCard key={p.slug} product={p} />)}</div> : <div className="state-panel"><Search size={32} /><h3>No products found</h3><p>Try another name or clear your filters.</p><button className="button" onClick={() => setParams({})}>Show all products <Arrow /></button></div>}{error && <p className="catalog-api-notice" role="status">Showing the bundled catalog while the API is unavailable. <button onClick={retry}>Retry API</button></p>}</div></div></section><Callout /></>;
 }
 export function Categories() {
   return <><PageIntro label="FIND YOUR CATEGORY" title={<>Different materials.<br /><em>A connected portfolio.</em></>}>From bulk solvents to technical products, start with the category that matches your business.</PageIntro><section className="section category-directory">{categories.map(c => <Link className="category-row" key={c.slug} style={{ '--category-image': `url(${categoryImages[c.slug]})` }} to={`/products?category=${c.slug}`}><span className="category-number">{c.number}</span><span className="category-row-image"><img src={categoryImages[c.slug]} alt="" /></span><CategoryIcon slug={c.slug} size={36} strokeWidth={1} /><div><h2>{c.name}</h2><p>{c.description}</p></div><span className="round-arrow"><Arrow size={24} /></span></Link>)}</section><Callout /></>;
@@ -143,14 +150,15 @@ export function ProductDetail() {
     slug
   } = useParams();
   const {
-    data: p,
+    data: apiProduct,
     loading,
     error,
     retry
   } = useResource(`/api/products/${encodeURIComponent(slug)}`);
+  const p = apiProduct || (error ? catalogProducts.find(product => product.slug === slug) : null);
   const related = useResource(p ? `/api/products?category=${p.category}` : null);
   if (loading) return <section className="section"><Loading /></section>;
-  if (error) return <section className="section"><ErrorPanel message={error} retry={retry} /><Link className="text-link" to="/products">Return to product catalog <Arrow /></Link></section>;
+  if (error && !p) return <section className="section"><ErrorPanel message={error} retry={retry} /><Link className="text-link" to="/products">Return to product catalog <Arrow /></Link></section>;
   if (!p) return null;
   return <><section className="section detail-section"><nav className="breadcrumbs" aria-label="Breadcrumb"><Link to="/">Home</Link><span>/</span><Link to="/products">Products</Link><span>/</span><span>{p.name}</span></nav><div className="detail-grid"><div className="detail-photo"><img src={`${p.image}?v=2`} alt={`${p.imageLabel}; not a product packaging photograph`} /><span>ILLUSTRATIVE LABORATORY PHOTOGRAPH</span></div><div className="detail-copy"><span className="eyebrow">{categories.find(c => c.slug === p.category)?.name}</span><h1>{p.name}</h1><p>{p.description}</p>{p.origin && p.origin !== 'Confirm with quotation' && <div className="product-origin"><strong>Origin</strong><span>{p.origin}</span></div>}<div className="product-advantages"><h3>Key advantages</h3><ul><li>Reliable sourcing for professional applications</li><li>Consistent quality selected for your requirements</li><li>Flexible supply and documentation support</li></ul></div><Link className="product-contact-link" to={`/contact?product=${p.slug}`}>For further details, contact our team <Arrow /></Link></div></div></section>{related.data?.products.length > 1 && <section className="section related-section"><div className="section-heading"><div><span className="eyebrow">CONTINUE EXPLORING</span><h2>In the same category.</h2></div><Link className="text-link" to={`/products?category=${p.category}`}>View category <Arrow /></Link></div><div className="product-grid">{related.data.products.filter(x => x.slug !== slug).slice(0, 3).map(x => <ProductCard key={x.slug} product={x} />)}</div></section>}<Callout /></>;
 }
