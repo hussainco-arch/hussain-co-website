@@ -10,7 +10,7 @@ export const company = {
   "address": "Saggiyan Hazrat Ali Road, Lahore, Pakistan",
   "founderName": "Naqash Iqbal Butt",
   "founderRole": "Chief Executive",
-  "founderImage": "/images/chief-executive.jpg",
+  "founderImage": "/images/new.png",
   "founderMessage": "",
   "intro": "Hussain & Co is a chemical importer and exporter based in Lahore, Pakistan. Our product portfolio includes solvents, glycols, industrial chemicals, and technical agrochemical materials. Contact our team with your product, grade, and packaging requirements.",
   "heroImage": "/images/front.png",
