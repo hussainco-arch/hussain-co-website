@@ -2257,6 +2257,41 @@ svg {
   padding: 10px 0;
   color: var(--ink);
 }
+.product-search-bar {
+  position: relative;
+}
+.product-search-input {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+}
+.product-search-input > input {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  outline-offset: 0;
+  padding: 10px 0;
+  color: var(--ink);
+}
+.product-search-suggestions {
+  position: absolute;
+  z-index: 60;
+  top: calc(100% + 8px);
+  left: -10px;
+  right: -10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 7px;
+  background: #fff;
+  border: 1px solid #eadfe0;
+  border-radius: 10px;
+  box-shadow: 0 12px 28px #25313d22;
+}
+.product-search-suggestions .suggestion-item {
+  width: 100%;
+  color: var(--ink);
+}
 .search-bar .button {
   background: #a7242f;
   border-color: #a7242f;
@@ -3344,6 +3379,9 @@ svg {
   }
   .catalog-section > .search-bar {
     display: flex;
+  }
+  .catalog-search-controls.scrolled {
+    display: none;
   }
   .mobile-catalog-sticky {
     display: block;
