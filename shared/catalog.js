@@ -29,18 +29,18 @@ export const categories = [
     "description": "Technical agrochemical materials for professional business inquiries."
   },
   {
-    "slug": "other",
-    "name": "Other Chemicals",
-    "short": "Other chemicals",
-    "number": "05",
-    "description": "For additional chemical requirements, contact our team with your specification."
-  },
-  {
     "slug": "carbon",
     "name": "Carbon",
     "short": "Carbon",
-    "number": "06",
+    "number": "05",
     "description": "Carbon materials including Carbon Black N330 for industrial requirements."
+  },
+  {
+    "slug": "other",
+    "name": "Other Chemicals",
+    "short": "Other chemicals",
+    "number": "06",
+    "description": "For additional chemical requirements, contact our team with your specification."
   }
 ];
 export const retiredProductSlugs = ["t20"];
