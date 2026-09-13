@@ -133,7 +133,7 @@ function Header() {
               )}
             </div>
             <button className="pill-menu-toggle" aria-expanded={open} aria-controls="navigation" aria-label={open ? 'Close menu' : 'Open menu'} onClick={() => setOpen(!open)}>
-              {open ? <X color="white" /> : <Menu color="white" />}
+              {open ? <X color="#1f2937" /> : <Menu color="#1f2937" />}
             </button>
           </div>
         </header>
