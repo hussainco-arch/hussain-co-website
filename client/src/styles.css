@@ -1490,7 +1490,7 @@ svg {
   .contact-qrs { display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: flex-start; grid-template-columns: none; }
   .contact-qrs a { flex: 0 0 auto; }
   .contact-qrs img, .whatsapp-qr img { width: 72px; height: auto; padding: 4px; }
-  .contact-image img, .story-image img, .portrait img { max-height: 220px; object-fit: cover; width: 100%; }
+  .contact-image img, .story-image img { max-height: 220px; object-fit: cover; width: 100%; }
 }
 .whatsapp-qr:focus-visible { outline: 3px solid #f1b5bc; outline-offset: 5px; }
 .whatsapp-number {
@@ -2804,6 +2804,18 @@ svg {
   object-position: center;
   animation: none;
 }
+.portrait > picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.portrait > picture > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
 @keyframes portrait-drift {
   from { transform: scale(1); }
   to { transform: scale(1.07); }
@@ -3546,7 +3558,8 @@ svg {
     padding: 25px;
   }
   .portrait {
-    height: 320px;
+    height: auto;
+    aspect-ratio: 941 / 1672;
   }
   .about-facts {
     grid-template-columns: 1fr;
