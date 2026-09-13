@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { Link, NavLink, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
-import { ArrowUpRight, ArrowRight, Menu, X, Globe2, FlaskConical, Factory, Droplets, Leaf, MoveUpRight, Search, ChevronDown, Check } from 'lucide-react';
+import { ArrowUpRight, ArrowRight, Menu, X, Globe2, FlaskConical, Factory, Droplets, Leaf, MoveUpRight, Search, ChevronDown, Check, ShieldCheck, Handshake } from 'lucide-react';
 import { company } from '../../shared/company.js';
 import { categories, products as catalogProducts } from '../../shared/catalog.js';
 import { ChemistryIndustryBand } from './components/ui/chemistry-industry-band.jsx';
@@ -145,7 +145,43 @@ function Footer() {
   return <footer className="footer"><div className="footer-top"><div><Link className="brand" to="/"><span className="logo-frame"><img src="/images/business-card.jpg" alt="" /></span><span>{company.shortName}<small>IMPORTER &amp; EXPORTER</small></span></Link><p>Chemistry connects us.<br />Partnership moves us forward.</p></div><div><span className="eyebrow">EXPLORE</span><Link to="/about">Our company</Link><Link to="/products">Chemical catalog</Link><Link to="/categories">Product categories</Link></div><div><span className="eyebrow">LET’S TALK</span><Link to="/contact">Discuss your requirements <Arrow size={14} /></Link>{company.email && <a href={`mailto:${company.email}`}>{company.email}</a>}{company.phone && <a href={`tel:${company.phone.replace(/[^+\d]/g, '')}`}>{company.phone}</a>}</div><div><span className="eyebrow">YOUR NEXT INGREDIENT</span><p>Find the right material<br />for what comes next.</p><Button to="/contact" outline>Start an inquiry</Button></div></div><div className="footer-bottom"><span>© {new Date().getFullYear()} {company.name}</span><span>{company.isTemplate ? 'Sample brand · Stock photography for illustration' : 'Lahore, Pakistan · Private Limited Company'}</span></div></footer>;
 }
 function Home() {
-  return <><section className="uploaded-chemistry-hero" aria-label="Hussain and Co chemistry introduction"><img src="/images/home-hero-chemistry.png" alt="Hussain and Co importer and exporter chemistry introduction" fetchPriority="high" /><Link to="/products" className="image-overlay-btn">Explore Our Products <ArrowRight size={22} strokeWidth={2} /></Link></section><section className="hero"><div className="hero-copy"><h1>A world of chemistry.<br /><em>A partner</em><br />for progress.</h1><p>Established in 2018, Hussain &amp; Co brings 17 years of experience in the chemical industry. We import goods from various countries, supply the market, and trade locally. We offer a wide range of quality chemicals at competitive prices. Our vision is to deliver quality products and ensure timely delivery to our customers.</p><div className="hero-actions"><Button to="/products">Explore our products</Button><Link className="text-link" to="/about">Meet {company.shortName} <Arrow /></Link></div><div className="hero-note"><Globe2 size={26} strokeWidth={1.2} /><span>Built around your business.<br /><strong>From inquiry to import.</strong></span></div></div><div className="hero-visual"><img src={company.heroImage} alt="Industrial processing tanks — illustrative stock photograph" fetchPriority="high" /><div className="hero-image-shade" /><span className="image-caption">THE BUILDING BLOCKS OF BETTER BUSINESS</span><div className="orbit-badge"><Globe2 size={34} strokeWidth={1} /><span>GLOBAL THINKING<br />PERSONAL SERVICE</span></div><div className="visual-label"><span>01 / THE CONNECTION</span><strong>Good chemistry.<br />Stronger connections.</strong><Link to="/contact" aria-label="Discuss your sourcing requirements"><Arrow size={26} /></Link></div></div></section>
+  return <>
+    <section className="mobile-chemistry-hero" aria-label="Hussain and Co chemistry mobile introduction">
+      <div className="mobile-hero-logo">
+        <img src="/images/logo.png" alt="Hussain & Co logo" />
+      </div>
+      <h2 className="mobile-hero-title">
+        <span>Hussain & Co</span>
+        <small>IMPORTER & EXPORTER</small>
+      </h2>
+      <p className="mobile-hero-tagline">
+        A world of chemistry. A partner for progress.
+      </p>
+      <Link to="/products" className="mobile-hero-btn">
+        Explore Our Products <ArrowRight size={20} strokeWidth={2} />
+      </Link>
+      <div className="mobile-hero-features">
+        <div className="feature-badge">
+          <Globe2 size={24} strokeWidth={1.5} />
+          <span>Global<br/>Sourcing</span>
+        </div>
+        <div className="feature-divider" />
+        <div className="feature-badge">
+          <ShieldCheck size={24} strokeWidth={1.5} />
+          <span>Quality<br/>Assured</span>
+        </div>
+        <div className="feature-divider" />
+        <div className="feature-badge">
+          <Handshake size={24} strokeWidth={1.5} />
+          <span>Trusted<br/>Partner</span>
+        </div>
+      </div>
+    </section>
+    <section className="uploaded-chemistry-hero" aria-label="Hussain and Co chemistry introduction">
+      <img src="/images/home-hero-chemistry.png" alt="Hussain and Co importer and exporter chemistry introduction" fetchPriority="high" />
+      <Link to="/products" className="image-overlay-btn">Explore Our Products <ArrowRight size={22} strokeWidth={2} /></Link>
+    </section>
+    <section className="hero"><div className="hero-copy"><h1>A world of chemistry.<br /><em>A partner</em><br />for progress.</h1><p>Established in 2018, Hussain &amp; Co brings 17 years of experience in the chemical industry. We import goods from various countries, supply the market, and trade locally. We offer a wide range of quality chemicals at competitive prices. Our vision is to deliver quality products and ensure timely delivery to our customers.</p><div className="hero-actions"><Button to="/products">Explore our products</Button><Link className="text-link" to="/about">Meet {company.shortName} <Arrow /></Link></div><div className="hero-note"><Globe2 size={26} strokeWidth={1.2} /><span>Built around your business.<br /><strong>From inquiry to import.</strong></span></div></div><div className="hero-visual"><img src={company.heroImage} alt="Industrial processing tanks — illustrative stock photograph" fetchPriority="high" /><div className="hero-image-shade" /><span className="image-caption">THE BUILDING BLOCKS OF BETTER BUSINESS</span><div className="orbit-badge"><Globe2 size={34} strokeWidth={1} /><span>GLOBAL THINKING<br />PERSONAL SERVICE</span></div><div className="visual-label"><span>01 / THE CONNECTION</span><strong>Good chemistry.<br />Stronger connections.</strong><Link to="/contact" aria-label="Discuss your sourcing requirements"><Arrow size={26} /></Link></div></div></section>
     <ChemicalTicker />
     <section className="section category-section"><div className="section-heading"><div><span className="eyebrow">OUR CHEMICAL PORTFOLIO</span><h2>Many industries.<br /><em>One connection.</em></h2></div><p>Find what you need.<br />Choose the products that fit your application.</p></div>        <div className="category-grid">{categories.map(c => <Link key={c.slug} className={`category-card ${categoryImages[c.slug] ? 'has-category-image' : ''}`} style={categoryImages[c.slug] ? { '--category-image': `url(${categoryImages[c.slug]})` } : undefined} to={`/products?category=${c.slug}`}><span className="category-number">{c.number}</span><CategoryIcon slug={c.slug} size={42} strokeWidth={1} /><h3>{c.name}</h3><p>{c.description}</p><span className="category-bottom">Explore category <span className="category-action"><Arrow /></span></span></Link>)}</div></section>    <section className="split-story section"><div className="story-image"><img src={company.companyImage} alt="Warehouse shelves — illustrative stock photograph" loading="lazy" /><span>THE PEOPLE BEHIND THE PROCESS</span></div><div className="story-copy"><span className="eyebrow">MORE THAN MATERIALS</span><h2>Business built on<br /><em>good chemistry.</em></h2><p>Established in 2018 and backed by over 17 years of industry expertise, Hussain &amp; Co. is a chemical importing and trading company connecting global manufacturers with the local market. For us, good chemistry extends beyond the materials we supply—it is reflected in the trust we earn and the lasting relationships we build.</p><p>We source and supply a comprehensive portfolio of high-purity chemicals, combining consistent quality with competitive pricing to support our customers’ evolving industrial needs.</p><p><strong>Our Vision:</strong> To advance our partners’ success through a steadfast commitment to product quality, dependable service, and timely delivery.</p>    <FlowButton to="/about" text="Get to know us" /></div></section>
     
