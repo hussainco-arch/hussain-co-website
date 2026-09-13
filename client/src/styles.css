@@ -2262,6 +2262,13 @@ svg {
   border-color: #a7242f;
   padding: 13px 22px;
 }
+.mobile-catalog-sticky,
+.mobile-category-select {
+  display: none;
+}
+.catalog-section > .search-bar {
+  display: none;
+}
 .catalog-layout {
   display: grid;
   grid-template-columns: 220px 1fr;
@@ -3323,6 +3330,34 @@ svg {
   .catalog-layout {
     grid-template-columns: 1fr;
   }
+  .catalog-section > .search-bar {
+    display: flex;
+  }
+  .mobile-catalog-sticky {
+    display: block;
+    position: fixed;
+    top: 78px;
+    left: 0;
+    right: 0;
+    z-index: 45;
+    padding: 8px 5%;
+    background: #ffffffee;
+    border-bottom: 1px solid #e7dfe0;
+    box-shadow: 0 8px 20px #25313d18;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  .mobile-catalog-sticky .search-bar {
+    margin: 0;
+    gap: 7px;
+    padding: 4px 6px 4px 10px;
+  }
+  .mobile-catalog-sticky .search-bar .button {
+    padding: 10px 12px;
+  }
+  .mobile-catalog-sticky .mobile-category-select {
+    display: none;
+  }
   .filters {
     position: static;
   }
@@ -3331,19 +3366,26 @@ svg {
   }
   .filters {
     display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 8px;
   }
   .filters>button {
-    width: auto;
+    width: 100%;
     border: 1px solid #ddd;
     padding: 11px 13px;
     font-size: .8rem;
     border-radius: 4px;
   }
   .category-children {
-    flex-basis: 100%;
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin: 0;
+    padding: 0 0 4px 10px;
   }
+  .category-children>button { width: 100%; }
   .catalog-top {
     margin-top: 10px;
   }
@@ -3423,6 +3465,27 @@ svg {
   }
   .search-bar>.button svg {
     display: none;
+  }
+  .mobile-category-select {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 8px 0 18px;
+    color: #6b6c72;
+    font-size: .78rem;
+    font-weight: 600;
+    letter-spacing: .04em;
+  }
+  .mobile-category-select select {
+    flex: 1;
+    min-width: 0;
+    padding: 10px 12px;
+    border: 1px solid #ded5d6;
+    border-radius: 8px;
+    background: #fff;
+    color: var(--ink);
+    font: inherit;
+    letter-spacing: normal;
   }
   .product-grid,.related-section>.product-grid {
     grid-template-columns: 1fr;

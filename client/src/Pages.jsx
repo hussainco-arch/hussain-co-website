@@ -50,7 +50,14 @@ export function Products() {
   }, [category]);
   const sort = params.get('sort') || 'catalog';
   const [draft, setDraft] = useState(q);
+  const [showMobileControls, setShowMobileControls] = useState(false);
   useEffect(() => setDraft(q), [q]);
+  useEffect(() => {
+    const onScroll = () => setShowMobileControls(window.scrollY > 180);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
   const {
     data,
     loading,
@@ -125,7 +132,8 @@ export function Products() {
   }, [setParams]);
   const list = [...(data?.products || (error ? fallbackProducts : []))];
   if (sort === 'name') list.sort((a, b) => a.name.localeCompare(b.name));
-  return <><PageIntro label="OUR CHEMICAL PORTFOLIO" title={<>Materials for<br /><em>what comes next.</em></>}>Explore our product list. Find a material, review the available details, and send your requirements to our team.</PageIntro><section className="catalog-section section"><div className="catalog-layout"><aside className="filters"><span className="eyebrow">CATEGORIES</span><button className={!category ? 'selected' : ''} onClick={() => update({
+  const searchControls = <><form className="search-bar" onSubmit={event => { event.preventDefault(); update({ q: draft.trim() }); }} role="search"><Search size={19} aria-hidden="true" /><input value={draft} onChange={event => setDraft(event.target.value)} placeholder="Search products..." aria-label="Search products" /><button className="button" type="submit">Search <Arrow size={16} /></button></form><label className="mobile-category-select">Category<select value={category} onChange={event => update({ category: event.target.value })}><option value="">All products</option>{categories.map(item => <option key={item.slug} value={item.slug}>{item.name}</option>)}</select></label></>;
+  return <><PageIntro label="OUR CHEMICAL PORTFOLIO" title={<>Materials for<br /><em>what comes next.</em></>}>Explore our product list. Find a material, review the available details, and send your requirements to our team.</PageIntro>{showMobileControls && <div className="mobile-catalog-sticky">{searchControls}</div>}<section className="catalog-section section">{searchControls}<div className="catalog-layout"><aside className="filters"><span className="eyebrow">CATEGORIES</span><button className={!category ? 'selected' : ''} onClick={() => update({
             category: ''
           })}>All products <Arrow size={15} /></button>
           <button className={category === 'industrial' ? 'selected' : ''} aria-expanded={industrialOpen} aria-controls="industrial-subcategories" onClick={() => {
