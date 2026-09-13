@@ -2492,14 +2492,6 @@ svg {
   font-size: .75rem;
   border-radius: 3px;
 }
-.stock-caption {
-  position: absolute;
-  left: 10px;
-  bottom: 10px;
-  background: #fff9;
-  padding: 3px 6px;
-  font-size: .75rem;
-}
 .product-arrow {
   position: absolute;
   bottom: 13px;
