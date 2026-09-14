@@ -941,12 +941,15 @@ svg {
   min-width: 100%;
   padding: 0 4px;
   animation: ticker-slide var(--ticker-duration) linear infinite;
+  -webkit-animation: ticker-slide var(--ticker-duration) linear infinite;
   will-change: transform;
 }
 
-.chemical-ticker-row:hover .chemical-ticker-track,
-.chemical-ticker-row:focus-within .chemical-ticker-track {
-  animation-play-state: paused;
+@media (hover: hover) and (pointer: fine) {
+  .chemical-ticker-row:hover .chemical-ticker-track,
+  .chemical-ticker-row:focus-within .chemical-ticker-track {
+    animation-play-state: paused;
+  }
 }
 
 .chemical-ticker-item {
