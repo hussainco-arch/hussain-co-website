@@ -1971,7 +1971,7 @@ svg {
 
   .nav-category-dropdown {
     position: static;
-    display: grid;
+    display: none;
     min-width: 0;
     padding: 0 0 0 10px;
     border: 0;
@@ -1981,6 +1981,15 @@ svg {
     visibility: visible;
     pointer-events: auto;
     transform: none;
+  }
+  .nav-category-dropdown.mobile-open {
+    display: grid;
+  }
+  .nav-category-arrow {
+    transition: transform .2s ease;
+  }
+  .nav-category-arrow.expanded {
+    transform: rotate(180deg);
   }
 
   .nav-category-dropdown a {

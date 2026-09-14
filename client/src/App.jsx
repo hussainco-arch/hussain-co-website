@@ -33,14 +33,16 @@ export const CategoryIcon = ({
 function Header() {
   const [open, setOpen] = useState(false);
   const [categoriesOpen, setCategoriesOpen] = useState(false);
-  const [forceClose, setForceClose] = useState(false);
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [showSuggestions, setShowSuggestions] = useState(false);
   const searchRef = useRef(null);
 
-  useEffect(() => setOpen(false), [pathname]);
+  useEffect(() => {
+    setOpen(false);
+    setCategoriesOpen(false);
+  }, [pathname]);
   useEffect(() => {
     const close = e => {
       if (e.key === 'Escape') setOpen(false);
@@ -73,11 +75,10 @@ function Header() {
           </Link>
           <nav id="navigation" className={open ? 'pill-nav open' : 'pill-nav'} aria-label="Main navigation">
             <NavLink to="/" end onClick={() => setOpen(false)}>Home</NavLink>
-            <NavLink to="/about">Our company</NavLink>
-            <NavLink to="/products">Products</NavLink>
+            <NavLink to="/about" onClick={() => setOpen(false)}>Our company</NavLink>
+            <NavLink to="/products" onClick={() => setOpen(false)}>Products</NavLink>
             <div 
               className="nav-category-menu"
-              style={{ display: forceClose ? 'none' : '' }}
               onMouseLeave={() => setCategoriesOpen(false)}
             >
               <NavLink 
@@ -90,7 +91,7 @@ function Header() {
                   }
                 }}
               >
-                Categories <ChevronDown className="nav-category-arrow" size={16} strokeWidth={2} aria-hidden="true" />
+                Categories <ChevronDown className={`nav-category-arrow ${categoriesOpen ? 'expanded' : ''}`} size={16} strokeWidth={2} aria-hidden="true" />
               </NavLink>
               <div className={`nav-category-dropdown ${categoriesOpen ? 'mobile-open' : ''}`} aria-label="Product categories">
                 {categories.map(category => (
@@ -101,10 +102,6 @@ function Header() {
                       setOpen(false);
                       setCategoriesOpen(false);
                       document.activeElement?.blur();
-                      if (window.innerWidth > 820) {
-                        setForceClose(true);
-                        setTimeout(() => setForceClose(false), 150);
-                      }
                     }}
                   >
                     {category.name}
@@ -112,7 +109,7 @@ function Header() {
                 ))}
               </div>
             </div>
-            <NavLink to="/contact">Contact Us</NavLink>
+            <NavLink to="/contact" onClick={() => setOpen(false)}>Contact Us</NavLink>
           </nav>
           <div className="pill-actions">
             <div className="pill-search-container" ref={searchRef}>
