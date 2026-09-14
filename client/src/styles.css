@@ -1966,14 +1966,17 @@ svg {
   }
 
   .nav-category-menu {
-    display: contents;
+    display: block;
   }
 
   .nav-category-dropdown {
     position: static;
     display: none;
+    width: 100%;
     min-width: 0;
-    padding: 0 0 0 10px;
+    margin: 2px 0 6px;
+    padding: 0 0 0 12px;
+    gap: 2px;
     border: 0;
     border-radius: 0;
     box-shadow: none;
@@ -1993,8 +1996,14 @@ svg {
   }
 
   .nav-category-dropdown a {
+    display: block;
+    width: 100%;
     padding: 9px 14px;
     font-size: .82rem;
+    color: #26313d;
+    background: transparent;
+    text-align: left;
+    box-sizing: border-box;
   }
 
   .pill-nav a:hover,
