@@ -35,11 +35,6 @@ let newProducts = items.map((name, idx) => {
   }`;
 }).join(',\n');
 
-// Find the last '  }\n];' and replace it with '  },\n' + newProducts + '\n];'
-if (content.trim().endsWith('];')) {
-  content = content.replace(/\n\s*\}\n*\];\s*$/, '\n  },\n' + newProducts + '\n];\n');
-  fs.writeFileSync(path, content, 'utf8');
-  console.log('Successfully updated catalog.js');
-} else {
-  console.error('Could not find the end of products array');
-}
+content = content.substring(0, content.lastIndexOf('}')) + '},\n' + newProducts + '\n];\n';
+fs.writeFileSync(path, content, 'utf8');
+console.log('Appended items to catalog.js correctly');
