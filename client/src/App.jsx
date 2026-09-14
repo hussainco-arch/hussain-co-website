@@ -32,6 +32,8 @@ export const CategoryIcon = ({
 };
 function Header() {
   const [open, setOpen] = useState(false);
+  const [categoriesOpen, setCategoriesOpen] = useState(false);
+  const [forceClose, setForceClose] = useState(false);
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
@@ -73,14 +75,37 @@ function Header() {
             <NavLink to="/" end onClick={() => setOpen(false)}>Home</NavLink>
             <NavLink to="/about">Our company</NavLink>
             <NavLink to="/products">Products</NavLink>
-            <div className="nav-category-menu">
-              <NavLink to="/categories" className="nav-category-trigger">Categories <ChevronDown className="nav-category-arrow" size={16} strokeWidth={2} aria-hidden="true" /></NavLink>
-              <div className="nav-category-dropdown" aria-label="Product categories">
+            <div 
+              className="nav-category-menu"
+              style={{ display: forceClose ? 'none' : '' }}
+              onMouseLeave={() => setCategoriesOpen(false)}
+            >
+              <NavLink 
+                to="/categories" 
+                className="nav-category-trigger"
+                onClick={(e) => {
+                  if (window.innerWidth <= 820) {
+                    e.preventDefault();
+                    setCategoriesOpen(!categoriesOpen);
+                  }
+                }}
+              >
+                Categories <ChevronDown className="nav-category-arrow" size={16} strokeWidth={2} aria-hidden="true" />
+              </NavLink>
+              <div className={`nav-category-dropdown ${categoriesOpen ? 'mobile-open' : ''}`} aria-label="Product categories">
                 {categories.map(category => (
                   <NavLink
                     key={category.slug}
                     to={`/products?category=${category.slug}`}
-                    onClick={() => setOpen(false)}
+                    onClick={() => {
+                      setOpen(false);
+                      setCategoriesOpen(false);
+                      document.activeElement?.blur();
+                      if (window.innerWidth > 820) {
+                        setForceClose(true);
+                        setTimeout(() => setForceClose(false), 150);
+                      }
+                    }}
                   >
                     {category.name}
                   </NavLink>
