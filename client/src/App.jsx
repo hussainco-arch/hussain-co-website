@@ -5,7 +5,7 @@ import { company } from '../../shared/company.js';
 import { categories, products as catalogProducts } from '../../shared/catalog.js';
 import { ChemistryIndustryBand } from './components/ui/chemistry-industry-band.jsx';
 import { ChemicalTicker } from './components/ui/ChemicalTicker.jsx';
-const categoryImages = { solvents: '/images/category-solvents.png', glycols: '/images/category-glycols.png', industrial: '/images/factory.jpg', technical: '/images/category-technical.png', other: '/images/laboratory.jpg', carbon: '/images/category-carbon.png' };
+const categoryImages = { solvents: '/images/category-solvents.png', glycols: '/images/category-glycols.png', industrial: '/images/other.png', technical: '/images/category-technical.png', other: '/images/other.png', carbon: '/images/category-carbon.png' };
 export const Arrow = ({
   size = 18
 }) => <ArrowUpRight size={size} aria-hidden="true" />;

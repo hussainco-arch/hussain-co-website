@@ -3600,7 +3600,8 @@ svg {
   }
   .portrait {
     height: auto;
-    aspect-ratio: 941 / 1672;
+    width: 100%;
+    aspect-ratio: 1 / 1;
   }
   .about-facts {
     grid-template-columns: 1fr;

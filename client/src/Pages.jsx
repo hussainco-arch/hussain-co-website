@@ -10,7 +10,7 @@ const categoryImages = {
   glycols: '/images/category-glycols.png',
   industrial: '/images/factory.jpg',
   technical: '/images/category-technical.png',
-  other: '/images/laboratory.jpg',
+  other: '/images/other.png',
   carbon: '/images/category-carbon.png'
 };
 export function getContacts() {
